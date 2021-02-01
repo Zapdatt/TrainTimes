@@ -15,7 +15,6 @@ def getDepartures():
 <AND>
 <EQ name="ActivityType" value="Avgang" />
 <EQ name="LocationSignature" value="{stations_dict[stationerfr.get()]}" />
-<EQ name="ToLocation" value="{stations_dict[stationerto.get()]}" />
 <OR>
 <AND>
 <GT name="AdvertisedTimeAtLocation" value="$dateadd(07:00:00)" />
@@ -57,6 +56,14 @@ stationerfr.place(relx=0, rely=0.5)
 stationerto = ttk.Combobox(canvas, state='readonly')
 stationerto['values'] = list(stations_dict.keys())
 stationerto.place(relx=0, rely=0.6)
+
+button=tk.Button(root, text='swap') #command= swapDestinations)
+button.place(relx=0.05, rely=0.55)
+
+fromTimeEntry = tk.Entry(canvas, text="from")
+fromTimeEntry.place(relx=0.2, rely=0.5)
+toTimeEntry = tk.Entry(canvas, text="to")
+toTimeEntry.place(relx=0.2, rely=0.6)
 
 stationer_text = tk.Text(canvas)
 stationer_text.place(relx=0.3, rely=0, relwidth=0.7, relheight=1)
