@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import json
 
-stations_dict = {'Karlstad':'Ks', 'Arvika': 'Ar', 'Kristinehamn':'Khn'}
+stations_dict = {'Arvika station': 'Ar', 'Charlottenberg station':'Cg', 'Degefors':'Dg', 'Fagerås':'Fgå', 'Karlskoga Dalbacksgatan':'Kasd', 'Karlskoga centrum':'Ksac', 'Karlstads central':'Ks', 'Karlstads yttre hamn':'Ksyh', 'Karlstad Välsviken':'Kvä', 'Karlstad östra':'Kö', 'Kil':'Kil', 'Kils omformarstation':'Kilo', 'Kristinehamn':'Khn', 'Molkom':'Mko', 'Sunne':'Sun', 'Säffle':'Sfl', 'Torsby':'Toy', 'Åmol':'Ål', 'Åmols djuphamn':'Åldj', 'Åmols östra':'Ålö', 'Reparationsplats, Kristinehamn':'Rkhn'}
 
 api_key = '9fcb5b87d02d4edb92e6d5f85917ab7b'
 
@@ -14,15 +14,12 @@ def getDepartures():
 <FILTER>
 <AND>
 <EQ name="ActivityType" value="Avgang" />
-<EQ name="LocationSignature" value="{stations_dict[stationer.get()]}" />
+<EQ name="LocationSignature" value="{stations_dict[stationerfr.get()]}" />
+<EQ name="ToLocation" value="{stations_dict[stationerto.get()]}" />
 <OR>
 <AND>
 <GT name="AdvertisedTimeAtLocation" value="$dateadd(07:00:00)" />
 <LT name="AdvertisedTimeAtLocation" value="$dateadd(10:00:00)" />
-</AND>
-<AND>
-<LT name="AdvertisedTimeAtLocation" value="$dateadd(00:30:00)" />
-<LT name="EstimatedTimeAtLocation" value="$dateadd(10:00:00)" />
 </AND>
 </OR>
 </AND>
@@ -48,15 +45,18 @@ def getDepartures():
           
 #----------------------
 root = tk.Tk()
-canvas = tk.Canvas(root, height=500, width=1000)
+canvas = tk.Canvas(root, height=500, width=965)
 canvas.pack()
 
 button=tk.Button(root, text='Hämta avgångar', fg='red', command= getDepartures)
 button.place(relwidth=0.1, height=50)
 
-stationer = ttk.Combobox(canvas, state='readonly')
-stationer['values'] = list(stations_dict.keys())
-stationer.place(relx=0, rely=0.5)
+stationerfr = ttk.Combobox(canvas, state='readonly')
+stationerfr['values'] = list(stations_dict.keys())
+stationerfr.place(relx=0, rely=0.5)
+stationerto = ttk.Combobox(canvas, state='readonly')
+stationerto['values'] = list(stations_dict.keys())
+stationerto.place(relx=0, rely=0.6)
 
 stationer_text = tk.Text(canvas)
 stationer_text.place(relx=0.3, rely=0, relwidth=0.7, relheight=1)
